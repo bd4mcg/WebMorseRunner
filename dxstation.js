@@ -35,8 +35,9 @@ export class DxStation extends Station {
       this.RST = 559 + 10 * random.RandomInt(0, 4)
     else this.RST = 599
 
-
-    this.Amplitude = 9000 + 18000 * (1 + random.RndUShaped())
+	// modify for volumn too low.
+	// this.Amplitude = 9000 + 18000 * (1 + random.RndUShaped())
+	this.Amplitude = 20000 + 25000 * (1 + random.RndUShaped())
     this.Pitch = Math.round(random.RndGaussLim(0, 300))
     this.TimeOut = Station.NEVER
     this.State = Station.State.Copying
