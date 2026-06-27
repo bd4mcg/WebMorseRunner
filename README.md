@@ -7,8 +7,6 @@ This is a new written version of Morse Runner as Web-Application.
 
 The app is hosted on GitHub Pages: https://bd4mcg.github.io/WebMorseRunner/
 
-**Translations:** [Deutsch](README_DE.md) · [日本語](README_JP.md)
-
 ![image](https://github.com/bd4mcg/WebMorseRunner/blob/main/ScreenShot.png)
 
 The Project is inspired by the Program [MorseRunner by VE3NEA - Alex Shovkoplyas](https://github.com/VE3NEA/MorseRunner). The Idea to start a complete new Web App Project originate from the authors previous effort to [port MorseRunner to Linux and Mac](https://github.com/fritzsche/MorseRunner).
