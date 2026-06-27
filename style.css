@@ -1,0 +1,432 @@
+/* ==========================================
+   1. 高级扁平主题色板 (Variables)
+   ========================================== */
+.dark-theme {
+  color-scheme: dark; /* 完美解决系统原生控件（如数字框上下小箭头）的深色背景适应 */
+  --bg-main: #0d1117;        
+  --bg-card: #161b22;        
+  --bg-input: #21262d;       
+  --text-main: #c9d1d9;      
+  --text-muted: #8b949e;     
+  --accent: #58a6ff;         
+  --border: #30363d;         
+  --btn-bg: #21262d;
+  --btn-hover: #30363d;
+  --run-bg: #238636;
+  --stop-bg: #da3633;
+}
+
+.light-theme {
+  color-scheme: light;
+  --bg-main: #f6f8fa;        
+  --bg-card: #ffffff;        
+  --bg-input: #f3f4f6;       
+  --text-main: #24292f;      
+  --text-muted: #57606a;     
+  --accent: #0969da;         
+  --border: #d0d7de;
+  --btn-bg: #f6f8fa;
+  --btn-hover: #eaeef2;
+  --run-bg: #1f883d;
+  --stop-bg: #cf222e;
+}
+
+/* ==========================================
+   2. 基础重置与一屏布局约束
+   ========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  padding: 10px 20px; /* 减小上下边距以腾出空间 */
+  transition: background 0.2s, color 0.2s;
+  
+  /* 将网页严格锁定在浏览器一屏内 */
+  height: 100vh;
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#top-nav {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  flex-shrink: 0; /* 防止导航栏被压缩 */
+}
+.nav-brand { font-size: 1.2rem; font-weight: bold; color: var(--text-main); }
+.version { font-size: 0.8rem; color: var(--accent); font-weight: normal; }
+.nav-controls { display: flex; align-items: center; gap: 10px; }
+.icon-btn { background: transparent; border: 1px solid var(--border); padding: 4px 8px; }
+.divider { color: var(--border); }
+
+/* 主区域：接管中心高度 */
+#main {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+  height: 560px;
+  /*flex: 1;          /* 撑满剩余高度 */
+  min-height: 0;    /* 解决 flex 下内容溢出的核心属性 */
+}
+
+/* ==========================================
+   3. 卡片化 Fieldset 
+   ========================================== */
+fieldset {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px; /* 调小间距适配一屏 */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+legend {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 0 8px;
+  margin-left: -8px;
+}
+
+/* ==========================================
+   4. 表单与网格排版
+   ========================================== */
+.grid { display: flex; flex-direction: column; gap: 8px; }
+.condx_grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.flex_form { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.flex { display: flex; gap: 16px; }
+
+/* 恢复标准的三列网格：标签、控件、辅助单位 */
+.grid_form { 
+  display: grid; 
+  grid-template-columns: max-content minmax(85px, max-content) 1fr; 
+  align-items: center; 
+  gap: 8px 10px; 
+}
+
+input, select, textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 5px 10px;
+  border-radius: 6px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s;
+}
+input:focus, select:focus { border-color: var(--accent); }
+input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; }
+
+/* 监听音量和RIT右对齐与长度调整 */
+#volume, #rit {
+  margin-left: auto;
+  width: 65%;
+  accent-color: var(--accent);
+  background: transparent;
+}
+
+label { color: var(--text-muted); font-size: 12px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ==========================================
+   5. 按钮美化
+   ========================================== */
+button {
+  background: var(--btn-bg);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+button:hover { background: var(--btn-hover); }
+
+#run { background: var(--run-bg); color: #fff; border: none; padding: 6px 16px; }
+#run.stop { background: var(--stop-bg); }
+#record.rec-armed { background: #b91c1c; color: white; }
+#record.recording { background: #ef4444; color: white; animation: rec-pulse 1.2s infinite; }
+@keyframes rec-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* ==========================================
+   6. 核心：流水日志与左右高度等齐对齐
+   ========================================== */
+#container { 
+  display: flex;
+  flex-direction: column;
+  height: 550px; /* 跟随 #main 撑满 */
+  min-height: 0;
+}
+#title { display: none; }
+
+#log {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex: 1; /* 撑满容器，高度自动适应右侧 */
+  min-height: 0; 
+  overflow-y: auto;
+  font-family: 'Courier New', Courier, monospace;
+  padding: 10px;
+}
+table { width: 100%; border-collapse: collapse; }
+#log_hdr th {
+  position: sticky;
+  top: -10px;
+  background: var(--bg-card);
+  color: var(--text-muted);
+  text-align: left;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+#log td { padding: 4px; border-bottom: 1px solid rgba(128,128,128,0.1); }
+
+/* 右侧配置栏容器 (用于超出滚动保护) */
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  height: 570px;
+  overflow-y: auto;
+}
+
+/* ==========================================
+   7. 底部功能区与高亮强调（全模式兼容美化版）
+   ========================================== */
+#footer {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 2.2fr 1.4fr 1fr; /* 微调比例，给录入区更多呼吸空间 */
+  gap: 16px;
+  margin-top: 12px;
+  flex-shrink: 0; /* 底部固定不缩放 */
+}
+
+/* 包含输入框和快捷键的左侧大区块 */
+#low_row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 突出显示发信录入区 */
+#input {
+  background: var(--bg-card);
+  border: 1.5px solid var(--accent); /* 微调边框，避免粗笨感 */
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.15); /* 更柔和的外发光 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 元素两端工整对齐 */
+  gap: 12px;
+  position: relative;
+}
+.light-theme #input {
+  box-shadow: 0 4px 12px rgba(9, 105, 218, 0.12);
+}
+
+/* 统一输入区块内的布局容器 */
+#input > div,
+#input div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#input label {
+  color: var(--accent); /* 标签着色高亮 */
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 1. 主呼号输入框：更加大气、现代 */
+#input input.cont_input { 
+  font-size: 1.6rem; 
+  font-weight: 700; 
+  width: 150px; 
+  height: 42px;
+  border: 1px solid var(--border);
+  background: var(--bg-main); /* 略深于卡片色，增强下陷层次感 */
+  text-align: left;
+  letter-spacing: 1px;
+  padding: 0 8px;
+}
+#input input.cont_input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+/* 信号报告与交换数据区域：确保横向排布 */
+#exchange {
+  display: flex;
+  flex-direction: row !important; /* 核心：强制所有出现的动态框横向并排 */
+  gap: 8px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* 2. 信号报告、Nr. 以及所有动态模式新增的输入框统一高定样式 */
+#input input.NR,
+#input #exchange input,
+#input input[type="text"]:not(.cont_input) { 
+  font-size: 1.3rem; 
+  font-weight: 700; 
+  width: 50px; /* 强制所有新增或自带的交换框缩窄至 50px，保持精致紧凑 */
+  height: 42px;
+  text-align: center; 
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0;
+  color: var(--text-main);
+  transition: border-color 0.2s;
+}
+
+#input input.NR:focus,
+#input #exchange input:focus,
+#input input[type="text"]:not(.cont_input):focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+/* TX 指示灯区域：精致化对齐 */
+.tx-box { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center;
+  margin-left: 5px; 
+  padding-left: 12px;
+  border-left: 1px solid var(--border); /* 增加一条纤细的分隔线 */
+  height: 42px;
+}
+.tx-box div:first-child {
+  font-size: 10px !important; 
+  color: var(--text-muted); 
+  font-weight: 700; 
+  margin-bottom: 4px;
+}
+.led-indicator {
+  width: 12px; 
+  height: 12px;
+  background: var(--border);
+  border-radius: 50%;
+  transition: all 0.1s ease;
+}
+.tx-active { 
+  background: #ff453a; 
+  box-shadow: 0 0 8px #ff453a, 0 0 2px #ff453a; 
+}
+
+/* F1-F8 快捷键主面板 */
+#send_button {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+#send_button button {
+  padding: 8px 4px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+#send_button button:hover {
+  border-color: var(--text-muted);
+  background: var(--btn-hover);
+}
+
+/* ==========================================
+   统计与时钟微调
+   ========================================== */
+#stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+#qso_info, #qso_per_h { font-size: 11px; color: var(--text-muted); text-align: center; padding: 2px; }
+#qso_chart {
+  background: var(--bg-input);
+  flex-grow: 1;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 4px;
+  min-height: 60px;
+}
+.bar { flex: 1; background: var(--accent); border-radius: 2px 2px 0 0; min-height: 1px; }
+
+#result {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#clock {
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: var(--accent);
+  margin-bottom: 8px;
+  background: var(--bg-input);
+  border-radius: 6px;
+  padding: 4px 0;
+}
+.table_result th { text-align: right; color: var(--text-muted); font-size: 11px; padding-bottom: 4px; }
+.table_result td { text-align: right; font-size: 12px; padding: 2px; }
+.table_result th:first-child, .table_result td:first-child { text-align: left; }
+.table_result td.hl { color: var(--accent); font-weight: bold; }
+
+/* 交互组件 */
+.hidden, .pileup_hidden, .nodisplay { display: none !important; }
+.pileup_green { color: #2ea043 !important; font-weight: bold; }
+.red { color: #f85149 !important; font-weight: bold; }
+
+/* 专家配置弹窗 */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; justify-content: center; align-items: center; z-index: 100;
+}
+.modal-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; width: 350px; overflow: hidden; }
+.modal-header { background: var(--bg-input); padding: 12px; font-weight: bold; color: var(--accent); border-bottom: 1px solid var(--border); }
+.modal-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.modal-footer { background: var(--bg-input); padding: 10px; text-align: right; border-top: 1px solid var(--border); }
+.expert-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; }
+
+/* 自定义滚动条 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
